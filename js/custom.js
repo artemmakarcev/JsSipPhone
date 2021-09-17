@@ -9,6 +9,11 @@ let duration = new Timer();
 let localDevice = $("#localVoice");
 let localDetail = localDevice[0];
 
+let localDevice1 = $("#localVoice1");
+let localDetail1 = localDevice1[0];
+
+
+
 let remoteDevice = $("#remoteVoice");
 let remoteDetail = remoteDevice[0];
 
@@ -66,10 +71,16 @@ $(document).ready(function() {
 // 
 function streamReroute() {
 	session.connection.addEventListener("addstream", function(e) {
+		console.log('Adding stream for remote from device.....');
 		let localStream = session.connection.getLocalStreams();
+		console.log('localStream.length : '+localStream.length);
 		if (localStream.length) localDetail.srcObject = localStream[0];
 
 		if (e.stream) remoteDetail.srcObject = (e.stream);
+
+		//if (e.stream) localDetail1.srcObject =localStream[0];
+
+		
 	});
 }
 
@@ -111,6 +122,36 @@ function stopSong(){
 	soundDevice.trigger("pause");
 }
 
+
+$('#songs').on('pause',function(e){
+	console.log('Song stopped......');
+})
+$('#songs').on('play',function(e){
+	console.log('9999999999999999999999999999999999999999999999999999999999999999999999999999 Song played......');
+})
+$('#songs').on('playing',function(e){
+	console.log('Song playing......');
+})
+
+$('#localVoice').on('pause',function(e){
+	console.log('localVoice stopped......');
+})
+$('#localVoice').on('play',function(e){
+	console.log('localVoice played......');
+})
+$('#localVoice').on('playing',function(e){
+	console.log('localVoice playing......');
+})
+
+$('#remoteVoice').on('pause',function(e){
+	console.log('remoteVoice stopped......');
+})
+$('#remoteVoice').on('play',function(e){
+	console.log('9999999999999999999999999999999999999999999999999999999999999999999999999999 remoteVoice played......');
+})
+$('#remoteVoice').on('playing',function(e){
+	console.log('remoteVoice playing......');
+})
 //
 // form
 //
@@ -149,7 +190,7 @@ $("#status").click(function() {
 			//"register_expires"	: 180
 		};
 
-		// JsSIP.debug.enable("JsSIP:*");
+		JsSIP.debug.enable("JsSIP:*");
 		phone = new JsSIP.UA(regOptions);
 
 		phone.on("registered", () => {
@@ -177,11 +218,12 @@ $("#status").click(function() {
 
 			session.on("progress", () => {
 				clearInterval(watchStatus);
-				playSong("sounds/ringing.mp3", true);
+				//playSong("sounds/ringing.mp3", true);
 				$("#status").html("Ringing...");
 			});
 
 			session.on("confirmed", () => {
+				console.log('Session Confirmed, going to stopSong...');
 				stopSong();
 				clearInterval(watchStatus);
 				$("#status").html("In call");
