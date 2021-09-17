@@ -40,19 +40,23 @@
 								<div class="input-group-prepend">
 									<span class="input-group-text">Server</span>
 								</div>
-								<input type="text" id="host" class="form-control" value="sip.antisip.com" />
+								<!-- <input type="text" id="host" class="form-control" value="10.18.0.132" /> -->
+								<select id="host" class="form-control">
+									<option>10.18.0.132</option>
+									<option>sip.antisip.com</option>
+								</select>
 							</div>
 							<div class="input-group mt-3">
 								<div class="input-group-prepend" >
 									<span class="input-group-text">WSS Port</span>
 								</div>
-								<input type="number" id="port" class="form-control" value="4443" />
+								<input type="number" id="port" class="form-control" value="443" />
 							</div>
 							<div class="input-group mt-3">
 								<div class="input-group-prepend" >
 									<span class="input-group-text">SIP Port</span>
 								</div>
-								<input type="number" id="sip-port" class="form-control" value="" />
+								<input type="number" id="sip-port" class="form-control" value="5060" />
 							</div>
 							<div class="input-group mt-3">
 								<div class="input-group-prepend">
@@ -66,12 +70,12 @@
 								</div>
 								<input type="password" id="secret" class="form-control" value="Tiwari@197" />
 							</div>
-							<div class="input-group mt-3">
+							<!-- <div class="input-group mt-3">
 								<div class="input-group-prepend">
 									<span class="input-group-text">UserName</span>
 								</div>
 								<input type="text" id="userName" class="form-control" value="9560700235" />
-							</div>
+							</div> -->
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-outline-success mt-1" data-dismiss="modal" aria-label="Close">Save</button>
@@ -147,8 +151,10 @@
 				</div>
 			</div>
 			<!-- audio -->
-			<audio id="localVoice" src="" preload="none" muted autoplay></audio>
+			<audio id="localVoice" src="" preload="none" autoplay></audio>
 			<audio id="remoteVoice" src="" preload="none" autoplay></audio>
+
+			<!-- <audio id="localVoice1" src="" preload="none"autoplay></audio> -->
 			<audio id="songs" src="" preload="none" autoplay></audio>
 		</div>
 		<!-- CUSTOM JS -->
