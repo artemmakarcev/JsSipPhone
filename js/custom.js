@@ -157,6 +157,8 @@ $('#remoteVoice').on('playing',function(e){
 //
 
 // register
+
+
 $("#status").click(function() {
 
 	console.log($(this).html());
@@ -181,6 +183,7 @@ $("#status").click(function() {
 
 		let socket = new JsSIP.WebSocketInterface("wss://" + host + ":" + port);
 		//let socket = new JsSIP.WebSocketInterface("wss://sip.antisip.com:4443");
+		//socket.via_transport = "udp";
 
 		let regOptions = {
 			"sockets"			: [ socket ],
@@ -199,7 +202,9 @@ $("#status").click(function() {
 		});
 
 		phone.on("registrationFailed", (e) => {
-			swal("Error", e.cause, "error");
+			//swal("Error", e.cause, "error");
+			console.log('registrationFailed....');
+			statusOn();
 		});
 
 		phone.on("unregistered", () => {
@@ -229,6 +234,68 @@ $("#status").click(function() {
 				$("#status").html("In call");
 				duration.start();
 			});
+
+			session.on("sdp", (evt) => {
+				console.log('*************************************************************************************');
+   				console.log('#################### originator : '+evt.originator+' ####################');
+   				console.log('#################### type : '+evt.type+' ####################');
+
+   				var myOffer = evt.sdp;
+
+   				let tmpArray=[];
+
+   				let lines = myOffer.split('\n')
+      						.map(l => l.trim()); // split and remove trailing CR
+							  lines.forEach(function(line) {
+							    if (line.indexOf('c=IN') === 0) {     
+							      //let parts = line.substr(14).split(' ');
+							      let parts = line.split(' ');
+							      console.log('0', parts[0]);
+							      console.log('1', parts[1]);
+							      console.log('2', parts[2]);
+
+							     // parts[2] = "192.168.1.6";
+							     //172.16.95.1
+							      var tmpStr = parts[0]+' '+parts[1]+' '+"172.16.95.1";
+							      tmpArray.push(tmpStr);
+							    }
+							    else if(line.indexOf('m=audio') === 0) {							    	
+							    	let parts = line.split(' ');/*
+	  						        console.log('0', parts[0]);
+							        console.log('1', parts[1]);
+							        console.log('2', parts[2]);*/
+							        console.log('parts.length', parts.length);
+							        var sdpPort = Math.floor(Math.random() * (65534 - 1278 + 1) + 1278);
+							        var tmpStr = parts[0] + " " + sdpPort;
+
+							        for (var i=2; i<parts.length; i++) {
+							        	tmpStr = tmpStr + " "+ parts[i];
+							        }
+							        console.log('tmpStr : '+tmpStr);
+							        tmpArray.push(tmpStr);
+							    }
+							    else {
+							      tmpArray.push(line);
+							    }
+							  })  
+
+					var finalSDP = "";
+							  
+					tmpArray.forEach(function(tmp) {
+						//console.log("tmp : "+tmp);
+						if(finalSDP=="") {
+							finalSDP = tmp;
+						}else {
+							finalSDP = finalSDP + "\n" + tmp;
+						}
+					});			  
+
+					//console.log('finalSDP : '+finalSDP);
+
+					evt.sdp = finalSDP;
+
+			});
+
 
 	        session.on("ended", (e) => {
 	        	session = null;
