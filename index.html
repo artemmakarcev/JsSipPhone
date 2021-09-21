@@ -70,12 +70,26 @@
 								</div>
 								<input type="password" id="secret" class="form-control" value="Tiwari@197" />
 							</div>
-							<!-- <div class="input-group mt-3">
+							<div class="input-group mt-3">
 								<div class="input-group-prepend">
-									<span class="input-group-text">UserName</span>
+									<span class="input-group-text">WebSocket Protocol</span>
 								</div>
-								<input type="text" id="userName" class="form-control" value="9560700235" />
-							</div> -->
+								<!-- <input type="text" id="userName" class="form-control" value="9560700235" /> -->
+								<select id="ws_protocol" class="form-control">
+									<option>wss</option>
+									<option>ws</option>
+								</select>
+							</div>
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text">m-line</span>
+								</div>
+								<!-- <input type="text" id="userName" class="form-control" value="9560700235" /> -->
+								<select id="m-line" class="form-control">
+									<option>DEFAULT</option>
+									<option>RTP/AVP</option>
+								</select>
+							</div>
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-outline-success mt-1" data-dismiss="modal" aria-label="Close">Save</button>
