@@ -181,7 +181,7 @@ $("#status").click(function() {
 
 		//let peer = "sip:9560700235@sip.antisip.com";
 
-		let socket = new JsSIP.WebSocketInterface("wss://" + host + ":" + port);
+		let socket = new JsSIP.WebSocketInterface($('#ws_protocol').val()+"://" + host + ":" + port);
 		//let socket = new JsSIP.WebSocketInterface("wss://sip.antisip.com:4443");
 		//socket.via_transport = "udp";
 
@@ -266,11 +266,21 @@ $("#status").click(function() {
 							        console.log('2', parts[2]);*/
 							        console.log('parts.length', parts.length);
 							        var sdpPort = Math.floor(Math.random() * (65534 - 1278 + 1) + 1278);
+
 							        var tmpStr = parts[0] + " " + sdpPort;
 
-							        for (var i=2; i<parts.length; i++) {
-							        	tmpStr = tmpStr + " "+ parts[i];
+							        if($('m-line').val()=='DEFAULT') {
+							        	for (var i=2; i<parts.length; i++) {
+							        		tmpStr = tmpStr + " "+ parts[i];
+							        	}
+							        }else {
+							        	var tmpStr = tmpStr + " RTP/AVP";
+							        	for (var i=3; i<parts.length; i++) {
+							        		tmpStr = tmpStr + " "+ parts[i];
+							        	}
 							        }
+
+							        
 							        console.log('tmpStr : '+tmpStr);
 							        tmpArray.push(tmpStr);
 							    }
