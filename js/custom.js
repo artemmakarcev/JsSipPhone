@@ -239,7 +239,7 @@ $("#status").click(function() {
 				console.log('*************************************************************************************');
    				console.log('#################### originator : '+evt.originator+' ####################');
    				console.log('#################### type : '+evt.type+' ####################');
-
+   				//console.log(evt.sdp);
    				var myOffer = evt.sdp;
 
    				let tmpArray=[];
@@ -268,14 +268,15 @@ $("#status").click(function() {
 							        var sdpPort = Math.floor(Math.random() * (65534 - 1278 + 1) + 1278);
 
 							        var tmpStr = parts[0] + " " + sdpPort;
-
-							        if($('m-line').val()=='DEFAULT') {
-							        	for (var i=2; i<parts.length; i++) {
-							        		tmpStr = tmpStr + " "+ parts[i];
-							        	}
-							        }else {
+							       	console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX m-line ::  '+$('#m-line').val());
+							        if($('#m-line').val()=='RTP/AVP' ) {
 							        	var tmpStr = tmpStr + " RTP/AVP";
 							        	for (var i=3; i<parts.length; i++) {
+							        		tmpStr = tmpStr + " "+ parts[i];
+							        	}
+
+							        }else {
+							        	for (var i=2; i<parts.length; i++) {
 							        		tmpStr = tmpStr + " "+ parts[i];
 							        	}
 							        }
