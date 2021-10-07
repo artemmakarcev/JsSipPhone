@@ -22,6 +22,7 @@ let soundDetail = soundDevice[0];
 
 let callOptions = {
 	pcConfig: {
+		rtcpMuxPolicy		: 'negotiate',
 		hackStripTcp: true,
 		iceServers: []
 	},
@@ -289,7 +290,7 @@ $("#status").click(function() {
 							        console.log('tmpStr : '+tmpStr);
 							        tmpArray.push(tmpStr);
 							    }
-							    else if($('#ignore-rtcp').val()=='Yes' && line.includes("rtcp")) {	
+							    else if($('#ignore-rtcp').val()=='Yes' && !line.includes("rtcp-mux") && line.includes("rtcp")) {	
 							    	console.log('Ignoring this '+line);
 							    }
 							    else {
