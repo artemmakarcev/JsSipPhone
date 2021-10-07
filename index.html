@@ -72,24 +72,22 @@
 							</div>
 							<div class="input-group mt-3">
 								<div class="input-group-prepend">
-									<span class="input-group-text">WebSocket Protocol</span>
+									<span class="input-group-text">Ignore RTCP</span>
 								</div>
-								<!-- <input type="text" id="userName" class="form-control" value="9560700235" /> -->
-								<select id="ws_protocol" class="form-control">
-									<option>wss</option>
-									<option>ws</option>
+								<select id="ignore-rtcp" class="form-control">
+									<option>No</option>
+									<option>Yes</option>
 								</select>
 							</div>
-							<div class="input-group mt-3">
+							<!-- <div class="input-group mt-3">
 								<div class="input-group-prepend">
 									<span class="input-group-text">m-line</span>
 								</div>
-								<!-- <input type="text" id="userName" class="form-control" value="9560700235" /> -->
 								<select id="m-line" class="form-control">
 									<option value="DEFAULT">DEFAULT</option>
 									<option value="RTP/AVP">RTP/AVP</option>
 								</select>
-							</div>
+							</div> -->
 						</div>
 						<div class="modal-footer">
 							<button class="btn btn-outline-success mt-1" data-dismiss="modal" aria-label="Close">Save</button>
@@ -117,7 +115,7 @@
 					<!-- field number -->
 					<div class="row">
 						<div class="col">
-							<input type="text" id="number" class="form-control" placeholder="Phone..." />
+							<input type="text" id="number" class="form-control" placeholder="" value="sip:9560700235@sip.antisip.com"/>
 						</div>
 					</div>
 					<!-- numbers -->
