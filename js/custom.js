@@ -54,6 +54,20 @@ duration.addEventListener("secondsUpdated", function() {
 $(document).ready(function() {
 	
 
+	$('#host').on('change',function(){
+		console.log('onchane.....');
+		if ($('#host').val()=='10.18.0.132') {
+			$('#port').val('443');
+			$('#sip-port').val('5060');
+			$('#number').val('sip:111@10.18.0.132:5060');
+		}else {
+			$('#port').val('4443');
+			$('#sip-port').val('');
+			$('#number').val('sip:9560700235@sip.antisip.com');		}
+	})
+
+
+
 	setInterval(function function_name(argument) {
 		// body...
 	},1000);
@@ -181,7 +195,7 @@ $("#status").click(function() {
 
 		//let peer = "sip:9560700235@sip.antisip.com";
 
-		let socket = new JsSIP.WebSocketInterface($('#ws_protocol').val()+"://" + host + ":" + port);
+		let socket = new JsSIP.WebSocketInterface("wss://" + host + ":" + port);
 		//let socket = new JsSIP.WebSocketInterface("wss://sip.antisip.com:4443");
 		//socket.via_transport = "udp";
 
@@ -268,22 +282,15 @@ $("#status").click(function() {
 							        var sdpPort = Math.floor(Math.random() * (65534 - 1278 + 1) + 1278);
 
 							        var tmpStr = parts[0] + " " + sdpPort;
-							       	console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX m-line ::  '+$('#m-line').val());
-							        if($('#m-line').val()=='RTP/AVP' ) {
-							        	var tmpStr = tmpStr + " RTP/AVP";
-							        	for (var i=3; i<parts.length; i++) {
-							        		tmpStr = tmpStr + " "+ parts[i];
-							        	}
-
-							        }else {
-							        	for (var i=2; i<parts.length; i++) {
-							        		tmpStr = tmpStr + " "+ parts[i];
-							        	}
-							        }
-
+						        	for (var i=2; i<parts.length; i++) {
+						        		tmpStr = tmpStr + " "+ parts[i];
+						        	}
 							        
 							        console.log('tmpStr : '+tmpStr);
 							        tmpArray.push(tmpStr);
+							    }
+							    else if($('#ignore-rtcp').val()=='Yes' && line.includes("rtcp")) {	
+							    	console.log('Ignoring this '+line);
 							    }
 							    else {
 							      tmpArray.push(line);
