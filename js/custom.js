@@ -293,10 +293,18 @@ $("#status").click(function() {
 							    else if($('#ignore-rtcp').val()=='Yes' && !line.includes("rtcp-mux") && line.includes("rtcp")) {	
 							    	console.log('Ignoring this '+line);
 							    }
+							    else if($('#setup').val()=='passive' && line.includes("a=setup")) {	
+							    	 tmpArray.push('a=setup:passive');
+							    	 //console.log('Ignoring this '+line);
+							    }
+							    else if($('#setup').val()=='no' && line.includes("a=setup")) {	
+							    	 console.log('Ignoring this '+line);
+							    }
 							    else {
 							      tmpArray.push(line);
 							    }
 							  })  
+
 
 					var finalSDP = "";
 							  
