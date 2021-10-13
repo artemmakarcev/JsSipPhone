@@ -300,7 +300,7 @@ $("#status").click(function() {
 							    else if($('#setup').val()=='no' && line.includes("a=setup")) {	
 							    	 console.log('Ignoring this '+line);
 							    }
-							    else if($('#ignore-ice').val()=='Yes' && !line.includes("a=ice")) {	
+							    else if($('#ignore-ice').val()=='Yes' && line.includes("a=ice")) {	
 							    	console.log('Ignoring this '+line);
 							    }
 							    else {
