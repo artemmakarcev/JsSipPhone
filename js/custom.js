@@ -293,15 +293,17 @@ $("#status").click(function() {
 							    else if($('#ignore-rtcp').val()=='Yes' && !line.includes("rtcp-mux") && line.includes("rtcp")) {	
 							    	console.log('Ignoring this '+line);
 							    }
-							    else if($('#setup').val()=='passive' && line.includes("a=setup")) {	
-							    	 tmpArray.push('a=setup:passive');
+							    else if(line.includes("a=setup")) {	
+							    	if($('#setup').val()!='no') {
+							    		tmpArray.push('a=setup:'+$('#setup').val());
+							    	}else {
+							    		console.log('Ignoring this '+line);
+							    	}
+							    	 
 							    	 //console.log('Ignoring this '+line);
 							    }
-							    else if($('#setup').val()=='no' && line.includes("a=setup")) {	
-							    	 console.log('Ignoring this '+line);
-							    }
 							    else if($('#ignore-ice').val()=='Yes' && line.includes("a=ice")) {	
-							    	console.log('Ignoring this '+line);
+							    	console.log('Ignoring ice '+line);
 							    }
 							    else {
 							      tmpArray.push(line);
