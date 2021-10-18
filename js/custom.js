@@ -294,9 +294,13 @@ $("#status").click(function() {
 							    	console.log('Ignoring this '+line);
 							    }
 							    else if(line.includes("a=setup")) {	
-							    	if($('#setup').val()!='no') {
+							    	if($('#setup').val()=='default') {
+							    		console.log('Send Default : '+line);
+							    		tmpArray.push(line);
+							    	}else if($('#setup').val()!='no') {
 							    		tmpArray.push('a=setup:'+$('#setup').val());
-							    	}else {
+							    	}
+							    	else {
 							    		console.log('Ignoring this '+line);
 							    	}
 							    	 
