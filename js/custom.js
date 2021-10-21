@@ -234,7 +234,18 @@ $("#status").click(function() {
 
 			session.on('peerconnection', function() {
 				if (session.direction === 'incoming') streamReroute();
+					console.log('##########################################################################################################################');
+					console.log('										peerconnection CREATED											');
+					console.log('##########################################################################################################################');
 			});
+
+/*
+			session.on('peerconnection', function(data) {
+					console.log('##########################################################################################################################');
+					console.log('										peerconnection CREATED											');
+					console.log('##########################################################################################################################');
+			});*/
+
 
 			session.on("progress", () => {
 				clearInterval(watchStatus);
@@ -319,9 +330,14 @@ $("#status").click(function() {
 							  
 					tmpArray.forEach(function(tmp) {
 						//console.log("tmp : "+tmp);
+
 						if(finalSDP=="") {
 							finalSDP = tmp;
-						}else {
+						}else if($('#add-crypto').val() == 'Yes' && tmp=='a=setup:actpass') {
+							finalSDP = finalSDP + "\n" + tmp;
+							finalSDP = finalSDP + "\n" + 'a=crypto:1 AES_CM_128_HMAC_SHA1_80 inline:64tgrt1lUekLKBdYbJUYKgOe8Y4n346q/He3nckf';
+						}
+						else {
 							finalSDP = finalSDP + "\n" + tmp;
 						}
 					});			  
@@ -469,3 +485,8 @@ $("#hold").click(function(){
 		}
 	}
 });
+
+
+
+
+
