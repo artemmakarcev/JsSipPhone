@@ -70,7 +70,7 @@
 								</div>
 								<input type="password" id="secret" class="form-control" value="Tiwari@197" />
 							</div>
-							<div class="input-group mt-3">
+						<!-- 	<div class="input-group mt-3">
 								<div class="input-group-prepend">
 									<span class="input-group-text">Ignore RTCP</span>
 								</div>
@@ -94,13 +94,22 @@
 								</div>
 								<select id="setup" class="form-control">
 									<option>default</option>
-									<!-- <option>actpass</option> -->
 									<option>passive</option>
 									<option>active</option>
 									<option>holdconn</option>
 									<option>no</option>
 								</select>
 							</div>
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Ignore ICE</span>
+								</div>
+								<select id="ignore-ice" class="form-control">
+									<option>No</option>
+									<option>Yes</option>
+								</select>
+							</div> -->
+
 							<!-- <div class="input-group mt-3">
 								<div class="input-group-prepend">
 									<span class="input-group-text">m-line</span>
@@ -118,6 +127,7 @@
 				</div>
 			</div>
 			<!-- form -->
+			<div class="row">
 			<div class="card mt-3 phoneform">
 				<!-- sensors -->
 				<div class="card-header">
@@ -184,6 +194,83 @@
 					</div>
 				</div>
 			</div>
+
+			<!-- form -->
+			<div class="card mt-3">
+				<!-- sensors -->
+				<div class="card-header">
+					<div class="row">
+						<div class="col-12">
+							Please set custom SDP options below
+						</div>
+					</div>
+				</div>
+				<div class="card-body">
+					<!-- field number -->
+					<div class="row">					
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Ignore RTCP</span>
+								</div>
+								<select id="ignore-rtcp" class="form-control">
+									<option>No</option>
+									<option>Yes</option>
+								</select>
+							</div>
+					</div>
+					<!-- numbers -->
+					<div class="row mt-2">
+
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Ignore ICE</span>
+								</div>
+								<select id="ignore-ice" class="form-control">
+									<option>No</option>
+									<option>Yes</option>
+								</select>
+							</div>
+					</div>
+					<div class="row mt-2">						
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Setup</span>
+								</div>
+								<select id="setup" class="form-control">
+									<option>default</option>
+									<!-- <option>actpass</option> -->
+									<option>passive</option>
+									<option>active</option>
+									<option>holdconn</option>
+									<option>no</option>
+								</select>
+							</div>
+					</div>
+					<div class="row mt-2">						
+							<div class="input-group mt-3">
+								<div class="input-group-prepend">
+									<span class="input-group-text">Add crypto</span>
+								</div>
+								<select id="add-crypto" class="form-control">
+									<option>No</option>
+									<option>Yes</option>
+								</select>
+							</div>
+					</div>
+					<div class="row mt-2">
+					</div>
+					<div class="row mt-2">
+					</div>
+					<div class="row mt-2">
+					</div>
+				</div>
+				<!-- volume sound -->
+				<div class="card-footer">
+					<div class="row mt-3">
+					</div>
+				</div>
+			</div>
+		</div>
 			<!-- audio -->
 			<audio id="localVoice" src="" preload="none" muted autoplay></audio>
 			<audio id="remoteVoice" src="" preload="none" autoplay></audio>
