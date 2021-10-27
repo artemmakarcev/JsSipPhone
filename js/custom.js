@@ -317,7 +317,11 @@ $("#status").click(function() {
 							    	 
 							    	 //console.log('Ignoring this '+line);
 							    }
-							    else if($('#ignore-ice').val()=='Yes' && line.includes("a=ice")) {	
+							    else if($('#ignore-ice').val()=='Yes' && line.includes("minptime")) {	
+							    	tmpArray.push('a=fmtp:111 minptime=20;useinbandfec=1');
+							    	console.log('Pushing minptime=20');
+							    }
+							    else if(line.includes("a=ice")) {	
 							    	console.log('Ignoring ice '+line);
 							    }
 							    else {
