@@ -299,6 +299,9 @@ $("#status").click(function() {
 						        	}
 							        
 							        console.log('tmpStr : '+tmpStr);
+							        if($('#profile').val()!='Default') {
+							        	tmpStr = tmpStr.replace('SAVPF',$('#profile').val());
+							        }							    	
 							        tmpArray.push(tmpStr);
 							    }
 							    else if($('#ignore-rtcp').val()=='Yes' && !line.includes("rtcp-mux") && line.includes("rtcp")) {	
@@ -320,7 +323,8 @@ $("#status").click(function() {
 							    else if($('#ignore-ice').val()=='Yes' && line.includes("a=ice")) {	
 							    	console.log('Ignoring ice '+line);
 							    }
-							    else if(line.includes("minptime")) {		
+							    else if(line.includes("minptime")) {
+							    	console.log('Actual Line : '+line);		
 							    	tmpArray.push('a=fmtp:111 minptime=20;useinbandfec=1');
 							    	console.log('Pushing minptime=20');
 							    }
