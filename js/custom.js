@@ -1,6 +1,8 @@
 // 
 // init 
-// 
+//
+var localIP; 
+var gatewayIP = '172.16.95.1';
 let phone;
 let session;
 let watchStatus;
@@ -53,6 +55,21 @@ duration.addEventListener("secondsUpdated", function() {
 // init
 // 
 $(document).ready(function() {
+
+	
+
+	window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;//compatibility for Firefox and chrome
+var pc = new RTCPeerConnection({iceServers:[]}), noop = function(){};      
+pc.createDataChannel('');//create a bogus data channel
+pc.createOffer(pc.setLocalDescription.bind(pc), noop);// create offer and set local description
+pc.onicecandidate = function(ice)
+{
+ if (ice && ice.candidate && ice.candidate.candidate)
+ {
+  localIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+  console.log('my IP: ', localIP);
+ }
+};
 	
 
 	$('#host').on('change',function(){
@@ -185,12 +202,16 @@ $("#status").click(function() {
 		let sipPort = $("#sip-port").val();
 		console.log('sipPort = '+sipPort);
 		let peer;
-
+		var selfHost = host;
+		if($('#from-ip').val()!='Default') {
+			selfHost = localIP;
+		}
+		
 		if(sipPort!='') {
-			 peer = "sip:" + user + "@" + host + ":" + sipPort;
+			 peer = "sip:" + user + "@" + selfHost + ":" + sipPort;
 			console.log('1 peer = '+peer);
 		}else {
-			 peer = "sip:" + user + "@" + host;
+			 peer = "sip:" + user + "@" + selfHost;
 			console.log('2 peer = '+peer);
 		}
 
@@ -270,6 +291,8 @@ $("#status").click(function() {
 
    				let tmpArray=[];
 
+   				console.log('##################### defaultChk : '+$('#defaultChk').val());
+
    				let lines = myOffer.split('\n')
       						.map(l => l.trim()); // split and remove trailing CR
 							  lines.forEach(function(line) {
@@ -282,8 +305,22 @@ $("#status").click(function() {
 
 							     // parts[2] = "192.168.1.6";
 							     //172.16.95.1
-							      var tmpStr = parts[0]+' '+parts[1]+' '+"172.16.95.1";
-							      tmpArray.push(tmpStr);
+							     //10.212.143.68
+							     var tmpStr = parts[0]+' '+parts[1] + ' ';
+							    	if($('#connection-ip').val()=='Local') {
+							    		 tmpStr = tmpStr + localIP;
+							    		 tmpArray.push(tmpStr);
+							    	}	      		
+							      	else if($('#connection-ip').val()=='Gateway')  {
+							      		tmpStr = tmpStr + gatewayIP;
+							    		 tmpArray.push(tmpStr);
+							      	}
+							      	else {
+							      		tmpArray.push(line);
+							      	}
+
+							     // var tmpStr = parts[0]+' '+parts[1]+' '+"172.16.95.1";
+							     
 							    }
 							    else if(line.indexOf('m=audio') === 0) {							    	
 							    	let parts = line.split(' ');/*
@@ -291,7 +328,7 @@ $("#status").click(function() {
 							        console.log('1', parts[1]);
 							        console.log('2', parts[2]);*/
 							        console.log('parts.length', parts.length);
-							        var sdpPort = Math.floor(Math.random() * (65534 - 1278 + 1) + 1278);
+							        var sdpPort = Math.floor(Math.random() * (65534 - 7078 + 1) + 7078);
 
 							        var tmpStr = parts[0] + " " + sdpPort;
 						        	for (var i=2; i<parts.length; i++) {
@@ -327,6 +364,46 @@ $("#status").click(function() {
 							    	console.log('Actual Line : '+line);		
 							    	tmpArray.push('a=fmtp:111 minptime=20;useinbandfec=1');
 							    	console.log('Pushing minptime=20');
+							    }
+							    else if(line.includes("o=")) {
+							    	if($('#origin-ip').val()=='Local')
+							      		 line = line.replace('127.0.0.1',localIP);
+							      	else if($('#origin-ip').val()=='Gateway') 
+							      	     line = line.replace('127.0.0.1',gatewayIP);	
+							      tmpArray.push(line);
+							    }
+							    else if(line.includes("s=-")) {
+							      tmpArray.push(line);
+							      tmpArray.push('i=(o=IN IP4 10.212.143.68)');
+							    }
+							    else if(line.includes("a=candidate")) {						    	
+							    	let parts = line.split(' ');
+	  						        console.log('0', parts[0]);
+							        console.log('ice-can-ip : ', $('#ice-can-ip').val());
+							        tmpStr = parts[0];
+							    	if($('#ice-can-ip').val()=='Local') {
+							      		for (var i=1; i<parts.length; i++) {
+							        		if(i==4) {
+							        			parts[i] = localIP;
+							        		}
+							        		tmpStr = tmpStr + " "+ parts[i];
+						        		}			
+							    	}
+							      	else if($('#ice-can-ip').val()=='Gateway')  {
+							      		for (var i=1; i<parts.length; i++) {
+							        		if(i==4) {
+							        			parts[i] = gatewayIP;
+							        		}
+							        		tmpStr = tmpStr + " "+ parts[i];
+						        		}			
+
+							      	}
+							      	else {
+							      		tmpStr = line;
+							      	}
+						        				        
+							        console.log('tmpStr : '+tmpStr);	
+							        tmpArray.push(tmpStr);
 							    }
 							    else {
 							      tmpArray.push(line);
