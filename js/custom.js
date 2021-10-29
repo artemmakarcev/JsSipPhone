@@ -291,8 +291,9 @@ $("#status").click(function() {
 
    				let tmpArray=[];
 
-   				console.log('##################### defaultChk : '+$('#defaultChk').val());
-
+   				console.log('##################### defaultChk : '+$('#defaultChk').is(":checked"));
+   				var isDefaultSDP = $('#defaultChk').is(":checked");
+   			if(!isDefaultSDP) {
    				let lines = myOffer.split('\n')
       						.map(l => l.trim()); // split and remove trailing CR
 							  lines.forEach(function(line) {
@@ -428,8 +429,9 @@ $("#status").click(function() {
 					});			  
 
 					//console.log('finalSDP : '+finalSDP);
-
 					evt.sdp = finalSDP;
+				}
+					
 
 			});
 
