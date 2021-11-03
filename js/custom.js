@@ -82,7 +82,7 @@ pc.onicecandidate = function(ice)
 		else if($('#host').val()=='10.18.0.129') {
 			$('#port').val('4443');
 			$('#sip-port').val('5060');
-			$('#number').val('sip:111@10.18.0.132:5060');			
+			$('#number').val('sip:111@10.18.0.129:5060');			
 		}
 		else {
 			$('#port').val('4443');
@@ -209,6 +209,7 @@ $("#status").click(function() {
 		console.log('sipPort = '+sipPort);
 		let peer;
 		var selfHost = host;
+		var ws_protocol = $('#ws-protocol').val();
 		if($('#from-ip').val()!='Default') {
 			selfHost = localIP;
 		}
@@ -223,7 +224,8 @@ $("#status").click(function() {
 
 		//let peer = "sip:9560700235@sip.antisip.com";
 
-		let socket = new JsSIP.WebSocketInterface("wss://" + host + ":" + port +'/ws');
+		//let socket = new JsSIP.WebSocketInterface("wss://" + host + ":" + port);
+		let socket = new JsSIP.WebSocketInterface(ws_protocol+"://" + host + ":" + port);
 		//let socket = new JsSIP.WebSocketInterface("wss://sip.antisip.com:4443");
 		//socket.via_transport = "udp";
 
