@@ -225,7 +225,7 @@ $("#status").click(function() {
 		//let peer = "sip:9560700235@sip.antisip.com";
 
 		//let socket = new JsSIP.WebSocketInterface("wss://" + host + ":" + port);
-		let socket = new JsSIP.WebSocketInterface(ws_protocol+"://" + host + ":" + port);
+		let socket = new JsSIP.WebSocketInterface(ws_protocol+"://" + host + ":" + port + "/ws");
 		//let socket = new JsSIP.WebSocketInterface("wss://sip.antisip.com:4443");
 		//socket.via_transport = "udp";
 
