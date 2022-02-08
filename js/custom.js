@@ -234,6 +234,7 @@ $("#status").click(function() {
 			"uri"      			: peer,
 			"contact_uri"		: peer,
 			"password"			: secret,
+      "session_timers": false,
 			//"register_expires"	: 180
 		};
 
